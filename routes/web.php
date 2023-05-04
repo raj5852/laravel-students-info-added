@@ -70,5 +70,4 @@ Route::get('demo',function(){
     //         ]);
     //     }
 
-        Artisan::call('migrate');
 });

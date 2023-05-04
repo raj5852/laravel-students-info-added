@@ -17,7 +17,7 @@ class DashboardController extends Controller
     function index()
     {
         $users = UserForm::latest()->paginate(10);
-        $divisions = Division::all();
+        $divisions = [];
 
         return view('users.dashboard', compact('users','divisions'));
     }
