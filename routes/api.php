@@ -28,3 +28,5 @@ Route::get('upazila/{id?}',[UserController::class,'upazila']);
 
 Route::get('district-to-info/{id?}',[UserController::class,'districtToInfo']);
 Route::get('batches/{id?}',[UserController::class,'batches']);
+
+Route::get('user-list-search',[UserController::class,'searchList']);

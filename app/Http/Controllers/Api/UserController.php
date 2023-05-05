@@ -15,7 +15,12 @@ class UserController extends Controller
 {
     function index()
     {
-        return UserForm::with(['divisiondata:id,name', 'districtdata:id,name', 'upaziladata:id,name', 'batchdata:id,name'])->get();
+        $search = request('search');
+
+        $data  =   UserForm::scopeSearch();
+
+
+        return response()->json($data);
     }
 
     function division()
