@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Models\Batch;
 use App\Models\User;
 use App\Models\UserForm;
 use Devfaysal\BangladeshGeocode\Models\District;
@@ -40,12 +41,32 @@ Route::middleware(['auth'])->prefix('user')->group(function(){
     Route::get('dashboard',[UserDashboardController::class,'index']);
     Route::post('infoStore',[UserDashboardController::class,'infoStore'])->name('post.userinfo');
     Route::get('delete/{id}',[UserDashboardController::class,'destroy'])->name('userformDelete');
+    Route::get('get-districts',[UserDashboardController::class,'getDistricts']);
+    Route::get('get-upazilas',[UserDashboardController::class,'getUpazilas']);
+
 });
 
 
 
 Route::get('demo',function(){
-    // return Division::all();
-    return Upazila::all();
+    // Batch::create([
+    //     'name'=>'batch -1 ',
+    // ]);
+
+    // Batch::create([
+    //     'name'=>'batch 2 ',
+    // ]);
+    // Batch::create([
+    //     'name'=>'batch 3 ',
+    // ]);
+    // Batch::create([
+    //     'name'=>'batch 4 ',
+    // ]);
+    // Batch::create([
+    //     'name'=>'batch 5 ',
+    // ]);
+    // Batch::create([
+    //     'name'=>'batch 6 ',
+    // ]);
 
 });

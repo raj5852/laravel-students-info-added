@@ -43,14 +43,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Image</label>
-                                        <input type="file" name="profile_img"  class="form-control">
+                                        <input type="file" name="profile_img" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Name</label>
-                                        <input type="text"  name="name" value="{{ old('name') }}"
+                                        <input type="text" name="name" value="{{ old('name') }}"
                                             placeholder="Enter Your name" class="form-control">
                                     </div>
                                 </div>
@@ -72,9 +72,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Divisions</label>
-                                        <select name="division" id=""  class="form-control">
+                                        <select name="division" id="division" class="form-control">
+                                            <option value="">Select Division</option>
                                             @foreach ($divisions as $division)
-                                                <option value="{{$division->name }}">{{ $division->name }}</option>
+                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -83,29 +84,35 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">District</label>
-                                        <input type="text" value="{{ old('district') }}" name="district"
-                                            placeholder="Enter your district" class="form-control">
+                                        <select name="district" id="district" class="form-control">
+                                            <option value="">Select District</option>
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Upazila</label>
-                                        <input type="text" value="{{ old('upazila') }}" name="upazila"
-                                            placeholder="Enter your upazila" class="form-control">
+                                        <select name="upazila" id="upazila" class="form-control">
+                                            <option value="">Select Upazila</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Batch</label>
-                                        <input type="text" value="{{ old('batch') }}" name="batch"
-                                            placeholder="Enter your Batch" class="form-control">
+                                        <select class="form-control" name="batch" id="">
+                                            <option value="">Select Batch</option>
+                                            @foreach ($batches as $batch)
+                                                <option value="{{ $batch->id }}">{{ $batch->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Working From</label>
-                                        <input type="text" value="{{  old('working_from') }}" name="working_from"
+                                        <input type="text" value="{{ old('working_from') }}" name="working_from"
                                             placeholder="Working From" class="form-control">
                                     </div>
                                 </div>
@@ -119,14 +126,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">CurrentPosting</label>
-                                        <input type="text" value="{{  old('currentPosting')}}"
-                                            name="currentPosting" placeholder="CurrentPosting" class="form-control">
+                                        <input type="text" value="{{ old('currentPosting') }}" name="currentPosting"
+                                            placeholder="CurrentPosting" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">PreviousPosting</label>
-                                        <input type="text" value="{{  old('previousposting') }}"
+                                        <input type="text" value="{{ old('previousposting') }}"
                                             name="previousposting" placeholder="PreviousPosting" class="form-control">
                                     </div>
                                 </div>
@@ -191,14 +198,15 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{$user->name}}</td>
-                                            <td><img src="{{  asset($user->profile_img) }}" style="width: 80px; " alt=""> </td>
+                                            <td>{{ $user->name }}</td>
+                                            <td><img src="{{ asset($user->profile_img) }}" style="width: 80px; "
+                                                    alt=""> </td>
                                             <td>{{ $user->educational_qualification }} </td>
                                             <td>{{ $user->date_of_birth }} </td>
-                                            <td>{{ $user->division }} </td>
-                                            <td>{{ $user->district }} </td>
-                                            <td>{{ $user->upazila }} </td>
-                                            <td>{{ $user->batch }} </td>
+                                            <td>{{ $user->divisiondata->name }} </td>
+                                            <td>{{ $user->districtdata->name }} </td>
+                                            <td>{{ $user->upaziladata->name }} </td>
+                                            <td>{{ $user->batchdata->name }} </td>
                                             <td>{{ $user->working_from }} </td>
                                             <td>{{ $user->appointed }} </td>
                                             <td>{{ $user->currentPosting }} </td>
@@ -207,7 +215,8 @@
                                             <td>{{ $user->mobile }} </td>
                                             <td>{{ $user->email }} </td>
                                             <td>
-                                           <a href="{{ route('userformDelete',$user->id) }}" class="btn btn-danger btn-sm">Delete</a>
+                                                <a href="{{ route('userformDelete', $user->id) }}"
+                                                    class="btn btn-danger btn-sm">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -221,4 +230,73 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+@endsection
+
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#division').on('change', function() {
+                var division_id = $(this).val();
+
+                if (division_id) {
+                    $('#district').prop('disabled', false);
+                    $('#district').html('<option value="">Loading...</option>');
+                    $('#upazila').prop('disabled', true);
+
+                    $.ajax({
+                        url: '/user/get-districts',
+                        type: 'GET',
+                        data: {
+                            division_id: division_id
+                        },
+                        success: function(data) {
+                            $('#district').html('<option value="">Select District</option>');
+                            $.each(data, function(key, value) {
+                                $('#district').append('<option value="' + key + '">' +
+                                    value + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#district').prop('disabled', true);
+                    $('#district').html('<option value="">Select District</option>');
+                    $('#upazila').prop('disabled', true);
+                    $('#upazila').html('<option value="">Select Upazila</option>');
+                }
+            });
+
+            $('#district').on('change', function() {
+                var district_id = $(this).val();
+
+                if (district_id) {
+                    $('#upazila').prop('disabled', false);
+
+                    $('#upazila').html('<option value="">Loading...</option>');
+
+                    $.ajax({
+                        url: '/user/get-upazilas',
+                        type: 'GET',
+                        data: {
+                            district_id: district_id
+                        },
+                        success: function(data) {
+                            $('#upazila').html('<option value="">Select Upazila</option>');
+                            $.each(data, function(key, value) {
+                                $('#upazila').append('<option value="' + key + '">' +
+                                    value + '</option>');
+                            });
+                        }
+                    });
+
+
+                } else {
+                    $('#upazila').prop('disabled', true);
+                    $('#upazila').html('<option value="">Select Upazila</option>');
+                }
+
+            })
+
+        })
+    </script>
 @endsection

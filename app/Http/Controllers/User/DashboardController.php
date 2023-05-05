@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Division;
+use App\Models\Batch;
 use App\Models\User;
 use App\Models\UserForm;
 use Illuminate\Http\Request;
 use App\Trait\UserTrait;
+use Devfaysal\BangladeshGeocode\Models\District;
+use Devfaysal\BangladeshGeocode\Models\Division;
+use Devfaysal\BangladeshGeocode\Models\Upazila;
 use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
@@ -16,10 +19,11 @@ class DashboardController extends Controller
 
     function index()
     {
-        $users = UserForm::latest()->paginate(10);
-        $divisions = [];
+        $users = UserForm::with(['divisiondata:id,name', 'districtdata:id,name', 'upaziladata:id,name','batchdata:id,name'])->latest()->paginate(10);
+        $divisions = Division::all();
+        $batches = Batch::all();
 
-        return view('users.dashboard', compact('users','divisions'));
+        return view('users.dashboard', compact('users', 'divisions', 'batches'));
     }
     function infoStore(Request $request)
     {
@@ -38,10 +42,10 @@ class DashboardController extends Controller
             'mobile' => 'required',
             'email' => 'required',
             'profile_img' => 'required',
-            'division'=>'required',
-            'division'=>'required',
-            'upazila'=>'required',
-            'batch'=>'required'
+            'division' => 'required',
+            'division' => 'required',
+            'upazila' => 'required',
+            'batch' => 'required'
         ]);
 
         $data = $request->all();
@@ -51,7 +55,7 @@ class DashboardController extends Controller
 
         if ($request->file('profile_img')) {
 
-            $image = $this->fileUpload($request->file('profile_img'), 'profileImage',400,400);
+            $image = $this->fileUpload($request->file('profile_img'), 'profileImage', 400, 400);
             $data['profile_img'] = $image;
         }
 
@@ -60,14 +64,24 @@ class DashboardController extends Controller
 
         return back()->with('success', 'Information save successfullly');
     }
-    function destroy($id){
+    function destroy($id)
+    {
         $user = UserForm::find($id);
-        if($user->profile_img){
+        if ($user->profile_img) {
             $this->fileDelete($user->profile_img);
         }
-         $user->delete();
-        return back()->with('success','Deleted successfully');
+        $user->delete();
+        return back()->with('success', 'Deleted successfully');
+    }
+    function getDistricts(Request $request)
+    {
+        $districts = District::where('division_id', $request->division_id)->pluck('name', 'id');
+        return response()->json($districts);
+    }
+    function getUpazilas(Request $request)
+    {
+        $upazilas = Upazila::where('district_id', $request->district_id)->pluck('name', 'id');
 
-
+        return response()->json($upazilas);
     }
 }
