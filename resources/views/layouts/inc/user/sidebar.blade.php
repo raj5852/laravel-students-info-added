@@ -23,6 +23,7 @@
                      </a>
 
                  </li>
+
                  <li class="nav-item">
                      <a href="{{ url('logout') }}" class="nav-link }">
                          <i class='fas fa-sign-out-alt'></i>

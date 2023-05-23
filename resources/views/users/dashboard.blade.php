@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="">Educational qualification</label>
+                                        <label for="">Educational Qualification</label>
                                         <input type="text" value="{{ old('educational_qualification') }}"
                                             name="educational_qualification" placeholder="Enter Educational qualification"
                                             class="form-control">
@@ -71,8 +71,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
+                                        <label for="">Home District</label>
+                                        <input type="text" name="home_district" placeholder="Home district"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
                                         <label for="">Divisions</label>
-                                        <select name="division" id="division" class="form-control">
+                                        <select name="division" id="division" class="form-control" required>
                                             <option value="">Select Division</option>
                                             @foreach ($divisions as $division)
                                                 <option value="{{ $division->id }}">{{ $division->name }}</option>
@@ -84,16 +91,19 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">District</label>
-                                        <select name="district" id="district" class="form-control">
+                                        <select name="district" id="district" class="form-control" required>
                                             <option value="">Select District</option>
                                         </select>
                                     </div>
                                 </div>
 
+
+
+
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Upazila</label>
-                                        <select name="upazila" id="upazila" class="form-control">
+                                        <select name="upazila" id="upazila" class="form-control" required>
                                             <option value="">Select Upazila</option>
                                         </select>
                                     </div>
@@ -101,7 +111,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="">Batch</label>
-                                        <select class="form-control" name="batch" id="">
+                                        <select class="form-control" name="batch" id="" required>
                                             <option value="">Select Batch</option>
                                             @foreach ($batches as $batch)
                                                 <option value="{{ $batch->id }}">{{ $batch->name }}</option>
@@ -111,38 +121,101 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="">Working From</label>
+                                        <label for="">Joining Date</label>
                                         <input type="text" value="{{ old('working_from') }}" name="working_from"
-                                            placeholder="Working From" class="form-control">
+                                            placeholder="Joining Date" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="">Appointed</label>
-                                        <input type="text" value="{{ old('appointed') }}" name="appointed"
-                                            placeholder="Appointed" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="">CurrentPosting</label>
-                                        <input type="text" value="{{ old('currentPosting') }}" name="currentPosting"
-                                            placeholder="CurrentPosting" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="">PreviousPosting</label>
-                                        <input type="text" value="{{ old('previousposting') }}"
-                                            name="previousposting" placeholder="PreviousPosting" class="form-control">
+                                        <label for="">Joining Date of New Station</label>
+                                        <input type="text" value="{{ old('new_section') }}" name="new_section"
+                                            placeholder="Joining date of new Station" class="form-control" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="">BloodGroup</label>
+                                        <label for="">Designation</label>
+                                        <select name="designation" class="form-control" id="">
+                                            <option value="">Select Designation</option>
+                                            @foreach ($designations as $designation)
+                                                <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="Registration_Directorate" class="col-md-6" style="display: none">
+                                    <div class="mb-3">
+                                        <label for="">Last name</label>
+                                        <select name="last_name_of_regi" class="form-control" id="">
+                                            <option value="">Select Last name</option>
+                                            <option value="IGR">IGR</option>
+                                            <option value="AIGR">AIGR</option>
+                                            <option value="DIGR">DIGR</option>
+                                            <option value="IRO">IRO</option>
+                                            <option value="District Registrar">District Registrar</option>
+                                            <option value="Sub Registrar">Sub Registrar</option>
+
+                                            <option value="Office stuff">Office stuff</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div id="Attach_To_Registration" class="col-md-6" style="display: none">
+                                    <div class="mb-3">
+                                        <label for="">Last name</label>
+                                        <select name="last_name_of_attach" class="form-control" id="">
+                                            <option value="">Select Last name</option>
+                                            <option value="District Registrar">District Registrar</option>
+                                            <option value="Sub Registrar">Sub Registrar</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div id="Registration_Directorate" class="mb-3" style="display: none">
+                                    <label for="">Last name</label>
+                                    <select name="designation" class="form-control" id="">
+                                        <option value="">Select Last name</option>
+                                        <option  value="IGR">IGR</option>
+                                        <option value="AIGR">AIGR</option>
+                                        <option value="DIGR">DIGR</option>
+                                        <option value="IRO">IRO</option>
+                                        <option value="Office stuff">Office stuff</option>
+                                    </select>
+                                </div> --}}
+
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="">Appointed By</label>
+                                        <input type="text" value="{{ old('appointed') }}" name="appointed"
+                                            placeholder="Appointed By" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="">Current Posting</label>
+                                        <input type="text" value="{{ old('currentPosting') }}" name="currentPosting"
+                                            placeholder="Current Posting" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="">Previous Posting</label>
+                                        <input type="text" value="{{ old('previousposting') }}"
+                                            name="previousposting" placeholder="Previous Posting" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="">Blood Group</label>
                                         <input type="text" value="{{ old('bloodgroup') }}" name="bloodgroup"
-                                            placeholder="BloodGroup" class="form-control">
+                                            placeholder="Blood Group" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -183,15 +256,19 @@
                                         <th>Date of birth</th>
                                         <th>Division</th>
                                         <th>District</th>
+                                        <th>Home District</th>
                                         <th>Upazila</th>
                                         <th>Batch</th>
-                                        <th>Working From</th>
-                                        <th>Appointed</th>
-                                        <th>CurrentPosting</th>
-                                        <th>Previousposting</th>
+                                        <th>Joining Date</th>
+                                        <th>Joining Date of New Station</th>
+                                        <th>Designation</th>
+                                        <th>Appointed By</th>
+                                        <th>Current Posting</th>
+                                        <th>Previous Posting</th>
                                         <th>Bloodgroup</th>
                                         <th>Mobile</th>
                                         <th>Email</th>
+                                        {{-- <th>Last Name</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -205,9 +282,26 @@
                                             <td>{{ $user->date_of_birth }} </td>
                                             <td>{{ $user->divisiondata->name }} </td>
                                             <td>{{ $user->districtdata->name }} </td>
+                                            <td>{{ $user->home_district }} </td>
+
                                             <td>{{ $user->upaziladata->name }} </td>
                                             <td>{{ $user->batchdata->name }} </td>
                                             <td>{{ $user->working_from }} </td>
+                                            <td>{{ $user->new_section }} </td>
+                                            <td> {{ $user->designationdata->name }}
+                                                @if ($user->last_name_of_regi)
+                                                    ({{ $user->last_name_of_regi }})
+                                                @endif
+
+                                                @if ($user->last_name_of_attach)
+                                                    (
+                                                    {{ $user->last_name_of_attach }}
+                                                    )
+                                                @endif
+
+
+
+                                            </td>
                                             <td>{{ $user->appointed }} </td>
                                             <td>{{ $user->currentPosting }} </td>
                                             <td>{{ $user->previousposting }} </td>
@@ -215,7 +309,10 @@
                                             <td>{{ $user->mobile }} </td>
                                             <td>{{ $user->email }} </td>
                                             <td>
-                                                <a href="{{ route('userformDelete', $user->id) }}"
+                                                <a href="{{ route('infoedit', $user->id) }}"
+                                                    class="btn btn-primary btn-sm">Edit</a>
+                                                <a onclick="return confirm('Are you sure?')"
+                                                    href="{{ route('userformDelete', $user->id) }}"
                                                     class="btn btn-danger btn-sm">Delete</a>
                                             </td>
                                         </tr>
@@ -296,6 +393,21 @@
                 }
 
             })
+
+            $("select[name='designation']").change(function() {
+                var selectedValue = $(this).val();
+                $("#Registration_Directorate").css("display", "none");
+                $("#Attach_To_Registration").css("display", "none");
+
+                if (selectedValue == 1) {
+                    $("#Registration_Directorate").css("display", "block");
+                }
+
+                if (selectedValue == 4) {
+                    $("#Attach_To_Registration").css("display", "block");
+                }
+
+            });
 
         })
     </script>

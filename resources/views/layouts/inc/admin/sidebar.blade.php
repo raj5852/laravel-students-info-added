@@ -32,6 +32,15 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item ">
+                    <a href="{{ route('users.all.info') }}" class="nav-link {{ request()->is('admin/users-all-info')?'active':'' }}">
+                        <i class=' fas fa-user-friends'></i>
+                        <p>
+                            All Info
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ url('logout') }}" class="nav-link }">
                         <i class='fas fa-sign-out-alt'></i>

@@ -29,4 +29,12 @@ Route::get('upazila/{id?}',[UserController::class,'upazila']);
 Route::get('district-to-info/{id?}',[UserController::class,'districtToInfo']);
 Route::get('batches/{id?}',[UserController::class,'batches']);
 
-Route::get('user-list-search',[UserController::class,'searchList']);
+// Route::get('user-list-search',[UserController::class,'searchList']);
+
+Route::get('designation/{id?}',[UserController::class,'designation']);
+
+
+
+
+Route::get('registration-directorate/{id?}',[UserController::class,'customApi']);
+Route::get('attach-to-registration-dir/{id?}',[UserController::class,'AttachToRegistration']);

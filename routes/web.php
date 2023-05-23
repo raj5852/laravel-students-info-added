@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AddUserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ShowInfoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
@@ -15,16 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 
 
 Route::get('/',[LoginController::class,'login'])->middleware('guest')->name('login');
@@ -35,38 +27,25 @@ Route::get('logout',[LogoutController::class,'index']);
 Route::middleware(['auth','isAdmin'])->prefix('admin')->group(function(){
     Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::resource('users',AddUserController::class);
+
+    Route::get('users-all-info',[ShowInfoController::class,'index'])->name('users.all.info');
+    Route::get('user-accept/{id}',[ShowInfoController::class,'accept'])->name('info-accept');
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function(){
     Route::get('dashboard',[UserDashboardController::class,'index']);
     Route::post('infoStore',[UserDashboardController::class,'infoStore'])->name('post.userinfo');
+    Route::post('infoStoreUpdate/{id}',[UserDashboardController::class,'infoUpdate'])->name('post.userinfo.update');
     Route::get('delete/{id}',[UserDashboardController::class,'destroy'])->name('userformDelete');
     Route::get('get-districts',[UserDashboardController::class,'getDistricts']);
     Route::get('get-upazilas',[UserDashboardController::class,'getUpazilas']);
+
+    Route::get('info/{id}',[UserDashboardController::class,'edit'])->name('infoedit');
 
 });
 
 
 
 Route::get('demo',function(){
-    // Batch::create([
-    //     'name'=>'batch -1 ',
-    // ]);
-
-    // Batch::create([
-    //     'name'=>'batch 2 ',
-    // ]);
-    // Batch::create([
-    //     'name'=>'batch 3 ',
-    // ]);
-    // Batch::create([
-    //     'name'=>'batch 4 ',
-    // ]);
-    // Batch::create([
-    //     'name'=>'batch 5 ',
-    // ]);
-    // Batch::create([
-    //     'name'=>'batch 6 ',
-    // ]);
-
+    return view('users.test');
 });
