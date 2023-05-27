@@ -159,4 +159,18 @@ class UserController extends Controller
         }
     }
 
+    function HomeDistrict(){
+
+
+        $district = UserForm::query()
+        ->where('status','active')
+        ->when(request('search'),fn($q, $name)=>$q->where('home_district','like',"%{$name}%"))
+        ->latest()
+        ->get();
+
+
+        return response()->json($district);
+
+    }
+
 }

@@ -38,3 +38,4 @@ Route::get('designation/{id?}',[UserController::class,'designation']);
 
 Route::get('registration-directorate/{id?}',[UserController::class,'customApi']);
 Route::get('attach-to-registration-dir/{id?}',[UserController::class,'AttachToRegistration']);
+Route::get('home-district',[UserController::class,'HomeDistrict']);

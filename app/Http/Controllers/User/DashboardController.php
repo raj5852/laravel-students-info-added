@@ -32,26 +32,6 @@ class DashboardController extends Controller
 
         $user = auth()->user();
 
-        // $request->validate([
-        //     'name' => 'required',
-        //     'educational_qualification' => 'required',
-        //     'date_of_birth' => 'required',
-        //     'district' => 'required',
-        //     'working_from' => 'required',
-        //     'appointed' => 'required',
-        //     'currentPosting' => 'required',
-        //     'previousposting' => 'required',
-        //     'bloodgroup' => 'required',
-        //     'mobile' => 'required',
-        //     'email' => 'required',
-        //     'profile_img' => 'required',
-        //     'division' => 'required',
-        //     'upazila' => 'required',
-        //     'batch' => 'required',
-        //     'new_section' => 'required',
-        //     'designation' => 'required',
-        // ]);
-
         $data = $request->all();
         $data['user_id'] = $user->id;
 
@@ -72,24 +52,6 @@ class DashboardController extends Controller
     function infoUpdate(Request $request, $id)
     {
         $user = auth()->user();
-        // $request->validate([
-        //     'name' => 'required',
-        //     'educational_qualification' => 'required',
-        //     'date_of_birth' => 'required',
-        //     'district' => 'required',
-        //     'working_from' => 'required',
-        //     'appointed' => 'required',
-        //     'currentPosting' => 'required',
-        //     'previousposting' => 'required',
-        //     'bloodgroup' => 'required',
-        //     'mobile' => 'required',
-        //     'email' => 'required',
-        //     'division' => 'required',
-        //     'upazila' => 'required',
-        //     'batch' => 'required',
-        //     'new_section' => 'required',
-        //     'designation' => 'required',
-        // ]);
         $form = UserForm::find($id);
         $form->name = $request->name;
         $form->educational_qualification = $request->educational_qualification;

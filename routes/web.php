@@ -46,6 +46,6 @@ Route::middleware(['auth'])->prefix('user')->group(function(){
 
 
 
-Route::get('demo',function(){
-    return view('users.test');
-});
+// Route::get('demo',function(){
+//     return view('users.test');
+// });
